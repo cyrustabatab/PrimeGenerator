@@ -64,8 +64,9 @@ def handle_arguments(arg1,arg2):
     arg1 = int(math.ceil(arg1))
     arg2 = int(math.ceil(arg2))
     
+    temp = arg1
     arg1 = min(arg1,arg2)
-    arg2 = max(arg1,arg2)
+    arg2 = max(temp,arg2)
 
     return arg1,arg2
 
@@ -82,12 +83,11 @@ if __name__ == "__main__":
         arg1 = float(sys.argv[1]) #i will allow for users to enter decimals such as 45.2 and will ceil it
         arg2 = float(sys.argv[2])
     except:
-        raise ValueError("Please enter INTEGERS for the ranges")
+        raise ValueError("Please enter NUMBERS for the ranges")
     else:
         start,end = handle_arguments(arg1,arg2)
 
 
-    
     primes = PrimeNumber.generate(start,end)
     
     print(primes)
