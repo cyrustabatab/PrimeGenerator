@@ -3,17 +3,15 @@ import math
 import sys
 
 
-
 class PrimeNumber:
-
 
     @staticmethod
     def generate(startingValue,endingValue):
         #sieve of erasthonees
-    
+
         marked = set()
         marked.add(1)
-        
+
         for n in range(2,int(math.ceil(math.sqrt(endingValue + 1)))):
             if n in marked:
                 continue
@@ -26,7 +24,6 @@ class PrimeNumber:
         #generator 
         return [n for n in range(startingValue,endingValue + 1) if n not in marked]
         
-
 
 
     @staticmethod

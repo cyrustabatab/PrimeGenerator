@@ -9,7 +9,6 @@ class Test(unittest.TestCase):
         self.generator = PrimeNumber.generate
         self.is_prime = PrimeNumber.isPrime
         self.first_million_primes = Test.get_first_n_primes("primes1.txt")
-        self.first_ten_thousand_primes = Test.get_first_n_primes("first_10000_primes")
     
     @staticmethod
     def get_first_n_primes(f):
@@ -44,8 +43,8 @@ class Test(unittest.TestCase):
 
         self.assertEqual(self.generator(1,15485863),self.first_million_primes)
     
-    def test_is_prime_for_first_ten_thousand_primes(self):
-        return all([self.is_prime(n) for n in self.first_ten_thousand_primes])
+    def test_is_prime_for_first_one_hundred_thousand(self):
+        return all([self.is_prime(n) for n in self.first_million_primes[:100000]])
     
     def test_not_prime_for_composite_up_to_millionth_prime(self):
         first_million_set = set(self.first_million_primes)
@@ -61,5 +60,4 @@ class Test(unittest.TestCase):
 
 if __name__ == "__main__":
     
-
     unittest.main(verbosity=2)
