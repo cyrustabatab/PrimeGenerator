@@ -2,15 +2,24 @@ import unittest
 from prime_number_generator import PrimeNumber
 
 
-
-
 class Test(unittest.TestCase):
 
-
+    
     def setUp(self):
         self.generator = PrimeNumber.generate
         self.is_prime = PrimeNumber.isPrime
-
+        self.first_million_primes = Test.get_first_n_primes("primes1.txt")
+        self.first_ten_thousand_primes = Test.get_first_n_primes("first_10000_primes")
+    
+    @staticmethod
+    def get_first_n_primes(f):
+        primes = []
+        with open(f,'r') as f:
+            for line in f: 
+                for prime in line.split():
+                    primes.append(int(prime))
+        
+        return primes
 
     def test_simple_cases(self):
 
@@ -19,8 +28,9 @@ class Test(unittest.TestCase):
         self.assertTrue(self.is_prime(3))
         self.assertTrue(self.is_prime(7))
     
-    def test_2(self):
-        self.assertTrue(self.is_prime(7907))
+    def test_random_large_primes(self):
+        self.assertTrue(self.is_prime(9533))
+        self.assertTrue(self.is_prime(13297))
 
     def test_one_zero_and_negative(self):
         """check if 1 and 0 and negative numbers are False"""
@@ -28,7 +38,19 @@ class Test(unittest.TestCase):
         self.assertFalse(self.is_prime(0))
         self.assertFalse(self.is_prime(-100))
         self.assertFalse(self.is_prime(-1))
+    
+    
+    def test_all_first_million_primes_generated(self):
 
+        self.assertEqual(self.generator(1,15485863),self.first_million_primes)
+    
+    def test_is_prime_for_first_ten_thousand_primes(self):
+        return all([self.is_prime(n) for n in self.first_ten_thousand_primes])
+    
+    def test_not_prime_for_composite_up_to_millionth_prime(self):
+        first_million_set = set(self.first_million_primes)
+        
+        return not any([self.isPrime(n) for n in self.first_million_primes if n not in first_million_set])
 
     def test_range_between_7900_and_7920(self):
 
