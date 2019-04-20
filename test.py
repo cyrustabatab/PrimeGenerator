@@ -1,24 +1,25 @@
 import unittest
 from prime_number_generator import PrimeNumber
 
+def get_first_million_primes(f):
+    primes = []
+    with open(f,'r') as f:
+        for line in f: 
+            for prime in line.split():
+                primes.append(int(prime))
+    
+    return primes
+
+
 
 class Test(unittest.TestCase):
-
+    
+    first_million_primes = get_first_million_primes("primes1.txt")
     
     def setUp(self):
         self.generator = PrimeNumber.generate
         self.is_prime = PrimeNumber.isPrime
-        self.first_million_primes = Test.get_first_n_primes("primes1.txt")
     
-    @staticmethod
-    def get_first_n_primes(f):
-        primes = []
-        with open(f,'r') as f:
-            for line in f: 
-                for prime in line.split():
-                    primes.append(int(prime))
-        
-        return primes
 
     def test_simple_cases(self):
 
@@ -41,15 +42,15 @@ class Test(unittest.TestCase):
     
     def test_all_first_million_primes_generated(self):
 
-        self.assertEqual(self.generator(1,15485863),self.first_million_primes)
+        self.assertEqual(self.generator(1,15485863),Test.first_million_primes)
     
     def test_is_prime_for_first_one_hundred_thousand(self):
-        return all([self.is_prime(n) for n in self.first_million_primes[:100000]])
+        return all([self.is_prime(n) for n in Test.first_million_primes[:100000]])
     
-    def test_not_prime_for_composite_up_to_millionth_prime(self):
-        first_million_set = set(self.first_million_primes)
+    def test_not_prime_for_composite_up_to_1_million(self):
+        first_million_set = set(Test.first_million_primes)
         
-        return not any([self.isPrime(n) for n in self.first_million_primes if n not in first_million_set])
+        return not any([self.is_prime(n) for n in range(1,int(1e6 + 1)) if n not in first_million_set])
 
     def test_range_between_7900_and_7920(self):
 
